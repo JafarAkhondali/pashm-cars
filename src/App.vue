@@ -96,9 +96,16 @@
 
         </div>
 
+        <div id="display">
+            <v-text-field
+                    dark
+                    label="Display Text"
+                    outline
+                    v-model="display"
+                    @input="textChanged"
 
-
-
+            ></v-text-field>
+        </div>
 
     </div>
 </template>
@@ -118,6 +125,7 @@
             return {
                 engineStarting: false,
                 isRecording: false,
+                display:'',
             }
         },
         methods:{
@@ -141,8 +149,6 @@
             },
             async assistant(state){
                 // Ask permission
-
-                console.log(state);
 
                 if(state){
                     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -182,7 +188,10 @@
             async window(position, state){
                 await CarService.windowControll(position, state);
             },
-
+            async textChanged(){
+                if(this.display)
+                    CarService.display(this.display);
+            }
         },
         computed:{
             ...mapGetters([
@@ -303,7 +312,11 @@
 
     }
 
-
+    #display{
+        position: absolute;
+        right: 15%;
+        bottom: 30%;
+    }
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

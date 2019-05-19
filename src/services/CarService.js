@@ -47,6 +47,12 @@ export function lockDoors(status) {
 }
 
 
+export function display(data) {
+    return Http().post('/display', {data});
+}
+
+
+
 /**
  *
  * @param position - Can be only lf or rf ( LeftFront - RightFront)
