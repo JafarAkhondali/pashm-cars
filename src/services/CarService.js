@@ -15,9 +15,24 @@ export function horn(status) {
     return Http().post('/beep', data);
 }
 
+export function BlobToBase64(blob){
+    return new Promise((resolve, reject)=>{
+        if (blob) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                resolve(e.target.result)
+            };
+            reader.onerror = (e)=> {reject(e)};
+            reader.readAsDataURL(blob);
+        }
+        else reject("No file has been selected");
+    });
+}
+
 export function water(status) {
     let data = command(status);
-    console.log(data);
+
+
     return Http().post('/water', data);
 }
 
