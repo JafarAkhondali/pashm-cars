@@ -1,21 +1,23 @@
 import Http from "./HttpService";
 
-const command  = (statusBool) => { command: statusBool };
+const command  = (statusBool) => {
+    return {command: statusBool}
+};
 
 export function engineStart(status) {
     let data = command(status);
     return Http().post('/engine', data);
 }
 
-
-
-export function beep(status) {
+export function horn(status) {
     let data = command(status);
+
     return Http().post('/beep', data);
 }
 
 export function water(status) {
     let data = command(status);
+    console.log(data);
     return Http().post('/water', data);
 }
 
