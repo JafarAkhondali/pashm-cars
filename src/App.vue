@@ -40,11 +40,65 @@
         <div
                 id="lock"
                 class="icon-circle"
-                v-touch:tap="()=> {lockdoors(true)}"
+                v-touch:tap="()=> {lockdoors()}"
         >
             <i v-if="this.lockdoors" class="fas fa-lock" ></i>
             <i v-else class="fas fa-lock-open" ></i>
         </div>
+
+
+
+
+
+        <!--WindowLeft-->
+
+        <div id="window_left">
+            <div
+                    id="left_front_UPWARD"
+                    class="icon-circle half"
+                    v-touch:start="()=> {window('lf', 'up')}"
+                    v-touch:end="()=> {window('lf', 'stop')}"
+            >
+                <i class="fas fa-level-up-alt"></i>
+            </div>
+
+            <div
+                    id="left_front_DOWNWARD"
+                    class="icon-circle half"
+                    v-touch:start="()=> {window('lf', 'down')}"
+                    v-touch:end="()=> {window('lf', 'stop')}"
+            >
+                <i class="fas fa-level-down-alt"></i>
+            </div>
+
+
+        </div>
+
+        <div id="window_right">
+            <div
+                    id="right_front_UPWARD"
+                    class="icon-circle half"
+                    v-touch:start="()=> {window('rf', 'up')}"
+                    v-touch:end="()=> {window('rf', 'stop')}"
+            >
+                <i class="fas fa-level-up-alt fa-flip-horizontal"></i>
+            </div>
+
+            <div
+                    id="right_front_DOWNWARD"
+                    class="icon-circle half"
+                    v-touch:start="()=> {window('rf', 'down')}"
+                    v-touch:end="()=> {window('rf', 'stop')}"
+            >
+                <i class="fas fa-level-down-alt fa-flip-horizontal"></i>
+            </div>
+
+
+        </div>
+
+
+
+
 
     </div>
 </template>
@@ -100,7 +154,7 @@
                     //  :)
                 }
             },
-            async windowControll(position, state){
+            async window(position, state){
                 await CarService.windowControll(position, state);
             },
 
@@ -140,16 +194,27 @@
     #engine{
         background: rgba(198, 40, 40,1.0);
         position: absolute;
-        top: 10%;
+        top: 5%;
         left: calc(50% - #{$icon-size/2} );
         box-shadow: 0 0 0 0;
     }
 
     #lock{
         position: absolute;
-        bottom: 10%;
+        top: 65%;
         left: calc(50% - #{$icon-size/2} );
         background: $lock-color;
+    }
+
+    #window_left{
+        position: absolute;
+        left: 0;
+        top: calc(50% - 100px);
+    }
+    #window_right{
+        position: absolute;
+        right: 0;
+        top: calc(50% - 100px);
     }
 
     .icon-circle{
@@ -171,6 +236,16 @@
         }
         background: $primary-color;
         border-radius: 50%;
+
+        &.half{
+            i{
+                margin-top: 15px;
+                margin-right: 3px;
+                font-size: 4.5em;
+            }
+            width: $icon-size/2;
+            height: $icon-size/2;
+        }
         width: $icon-size;
         height: $icon-size;
         border: solid 3px $text;
@@ -190,7 +265,7 @@
 
     #assistant{
         position: absolute;
-        top: 40%;
+        top: 35%;
         left: calc(50% - #{$icon-size/2} );
         background: $assistant-color;
 
