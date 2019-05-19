@@ -18,6 +18,15 @@
       <i class="fas fa-bullhorn"></i>
     </div>
 
+    <div
+            id="engine"
+            class="icon-circle tap"
+            v-touch:tap="()=> {engine(true)}"
+    >
+      <i class="fas fa-power-off"></i>
+    </div>
+
+
 
   </div>
 </template>
@@ -41,7 +50,7 @@
       async horn(state){
         await CarService.horn(state);
       },
-      async engineStart(state){
+      async engine(state){
         if(this.engineStarting) return;
 
         try{
@@ -93,31 +102,48 @@
   $bg3: rgba(21, 101, 192,.6);
   $borderColor: rgba(0, 131, 143,1.0);
   $text: #efefef;
+  $icon-size: 200px;
 
+
+  #engine{
+    background: rgba(198, 40, 40,1.0);
+    position: absolute;
+    top: 10%;
+    left: calc(50% - #{$icon-size/2} )
+  }
   .icon-circle{
     transition: all .3s;
+
+    &.tap{
+      box-shadow: 0px 0px 7px 1px $text;
+    }
+
     &.active{
       border-color: $borderColor;
+      &.tap{
+        box-shadow: 0px 0px 7px 1px $borderColor;
+      }
     }
+
     i{
       margin-top: 30px; font-size: 9em
     }
     background: $primary-color;
     border-radius: 50%;
-    width: 200px;
-    height: 200px;
+    width: $icon-size;
+    height: $icon-size;
     border: solid 3px $text;
   }
 
   #water{
     position: absolute;
-    right: 25%;
+    right: 15%;
     top: 2%;
   }
 
   #horn{
     position: absolute;
-    left: 25%;
+    left: 15%;
     top: 2%;
   }
 
@@ -131,4 +157,7 @@
     background: linear-gradient(45deg, $bg1, $bg2, $bg3);
     color: $text;
   }
+
+
+
 </style>
