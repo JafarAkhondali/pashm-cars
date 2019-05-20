@@ -1,7 +1,6 @@
 const state = {
     engineOn: false,
-    doorsLocked: false,
-    baseUrl: 'http://localhost/api/v1/'
+    doorsLocked: false
 };
 
 const getters = {

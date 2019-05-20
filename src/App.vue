@@ -56,8 +56,8 @@
             <div
                     id="left_front_UPWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('lf', 'up')}"
-                    v-touch:end="()=> {window('lf', 'stop')}"
+                    v-touch:start="()=> {window('left_front', 'up')}"
+                    v-touch:end="()=> {window('left_front', 'stop')}"
             >
                 <i class="fas fa-level-up-alt"></i>
             </div>
@@ -65,8 +65,8 @@
             <div
                     id="left_front_DOWNWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('lf', 'down')}"
-                    v-touch:end="()=> {window('lf', 'stop')}"
+                    v-touch:start="()=> {window('left_front', 'down')}"
+                    v-touch:end="()=> {window('left_front', 'stop')}"
             >
                 <i class="fas fa-level-down-alt"></i>
             </div>
@@ -78,8 +78,8 @@
             <div
                     id="right_front_UPWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('rf', 'up')}"
-                    v-touch:end="()=> {window('rf', 'stop')}"
+                    v-touch:start="()=> {window('right_front', 'up')}"
+                    v-touch:end="()=> {window('right_front', 'stop')}"
             >
                 <i class="fas fa-level-up-alt fa-flip-horizontal"></i>
             </div>
@@ -87,8 +87,8 @@
             <div
                     id="right_front_DOWNWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('rf', 'down')}"
-                    v-touch:end="()=> {window('rf', 'stop')}"
+                    v-touch:start="()=> {window('right_front', 'down')}"
+                    v-touch:end="()=> {window('right_front', 'stop')}"
             >
                 <i class="fas fa-level-down-alt fa-flip-horizontal"></i>
             </div>
@@ -103,7 +103,6 @@
                     outline
                     v-model="display"
                     @input="textChanged"
-
             ></v-text-field>
         </div>
 
@@ -135,12 +134,12 @@
             async horn(state){
                 await CarService.horn(state);
             },
-            async engine(state){
+            async engine(){
                 if(this.engineStarting) return;
 
                 try{
                     this.engineStarting = true;
-                    let engineStatusRequest = await CarService.engineStart(state);
+                    let engineStatusRequest = await CarService.engineStart(!this.engineStatus);
                     let engineStatus = engineStatusRequest.data.status;
                     this.$store.dispatch('engineStatus', engineStatus);
                 }finally {
