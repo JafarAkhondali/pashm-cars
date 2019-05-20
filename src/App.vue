@@ -54,19 +54,19 @@
 
         <div id="window_left">
             <div
-                    id="left_front_UPWARD"
+                    id="front_left_UPWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('left_front', 'up')}"
-                    v-touch:end="()=> {window('left_front', 'stop')}"
+                    v-touch:start="()=> {window('front_left', 'up')}"
+                    v-touch:end="()=> {window('front_left', 'stop')}"
             >
                 <i class="fas fa-level-up-alt"></i>
             </div>
 
             <div
-                    id="left_front_DOWNWARD"
+                    id="front_left_DOWNWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('left_front', 'down')}"
-                    v-touch:end="()=> {window('left_front', 'stop')}"
+                    v-touch:start="()=> {window('front_left', 'down')}"
+                    v-touch:end="()=> {window('front_left', 'stop')}"
             >
                 <i class="fas fa-level-down-alt"></i>
             </div>
@@ -76,19 +76,19 @@
 
         <div id="window_right">
             <div
-                    id="right_front_UPWARD"
+                    id="front_right_UPWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('right_front', 'up')}"
-                    v-touch:end="()=> {window('right_front', 'stop')}"
+                    v-touch:start="()=> {window('front_right', 'up')}"
+                    v-touch:end="()=> {window('front_right', 'stop')}"
             >
                 <i class="fas fa-level-up-alt fa-flip-horizontal"></i>
             </div>
 
             <div
-                    id="right_front_DOWNWARD"
+                    id="front_right_DOWNWARD"
                     class="icon-circle half"
-                    v-touch:start="()=> {window('right_front', 'down')}"
-                    v-touch:end="()=> {window('right_front', 'stop')}"
+                    v-touch:start="()=> {window('front_right', 'down')}"
+                    v-touch:end="()=> {window('front_right', 'stop')}"
             >
                 <i class="fas fa-level-down-alt fa-flip-horizontal"></i>
             </div>
