@@ -21,7 +21,8 @@
         <div
                 id="engine"
                 class="icon-circle tap"
-                v-touch:tap="()=> {engine(true)}"
+                v-bind:class="{'turned-on': this.engineOn}"
+                v-touch:tap="()=> {engine()}"
         >
             <i class="fas fa-power-off"></i>
         </div>
@@ -42,7 +43,7 @@
                 class="icon-circle"
                 v-touch:tap="()=> {lockdoors()}"
         >
-            <i v-if="this.lockdoors" class="fas fa-lock" ></i>
+            <i v-if="this.doorsLocked" class="fas fa-lock" ></i>
             <i v-else class="fas fa-lock-open" ></i>
         </div>
 
@@ -139,7 +140,7 @@
 
                 try{
                     this.engineStarting = true;
-                    let engineStatusRequest = await CarService.engineStart(!this.engineStatus);
+                    let engineStatusRequest = await CarService.engineStart(!this.engineOn);
                     let engineStatus = engineStatusRequest.data.status;
                     this.$store.dispatch('engineStatus', engineStatus);
                 }finally {
@@ -156,7 +157,18 @@
                         // Set record to <audio> when recording will be finished
                         recorder.addEventListener('dataavailable', async e => {
                             const base64Audio = await BlobToBase64(e.data);
-                            await CarService.assistant(base64Audio );
+                            const assistantResponse = await CarService.assistant(base64Audio);
+                            let state = assistantResponse.data.state;
+
+                            if(state.lock)
+                                this.$store.dispatch('lockStatus', state.lock);
+
+                            if(state.engine)
+                                this.$store.dispatch('engineStatus', state.engine);
+
+
+
+
                             console.log('Sent')
                         });
 
@@ -176,9 +188,14 @@
 
             },
             async lockdoors(){
+                console.log(this.doorsLocked);
+
                 try{
                     const lockStatusRequest = await CarService.lockDoors(!this.doorsLocked);
-                    let lockStatus = lockStatusRequest.data.locked;
+                    let lockStatus = lockStatusRequest.data.status;
+                    console.log(lockStatus );
+                    console.log('-----------------');
+
                     this.$store.dispatch('lockStatus', lockStatus);
                 }catch (e) {
                     //  :)
@@ -225,6 +242,10 @@
 
 
     #engine{
+        &.turned-on{
+            background: #388e3c;
+        }
+
         background: rgba(198, 40, 40,1.0);
         position: absolute;
         top: 5%;
