@@ -146,10 +146,10 @@
                     this.engineStarting = false;
                 }
             },
-            async assistant(){
+            assistant: async function () {
                 // Ask permission
 
-                if(!this.isRecording){
+                if (!this.isRecording) {
                     this.isRecording = true;
                     console.log('clicked');
                     try {
@@ -165,10 +165,10 @@
                                 const assistantResponse = await CarService.assistant(base64Audio);
                                 let state = assistantResponse.data.state;
 
-                                if (state.lock)
+                                if ('lock' in state)
                                     this.$store.dispatch('lockStatus', state.lock);
 
-                                if (state.engine)
+                                if ('engine' in state)
                                     this.$store.dispatch('engineStatus', state.engine);
 
                                 console.log('Sent')
@@ -178,11 +178,11 @@
                             recorder.start();
                             console.log('recording')
                         });
-                    }catch (e) {
+                    } catch (e) {
                         this.isRecording = false;
                     }
 
-                }else{
+                } else {
                     this.isRecording = false;
                     console.log('recording click finish')
                     //Finish recording  & Send data
