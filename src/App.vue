@@ -32,8 +32,7 @@
                 id="assistant"
                 class="icon-circle"
                 v-bind:class="{recording: isRecording}"
-                v-touch:start="()=> {assistant(true)}"
-                v-touch:end="()=> {assistant(false)}"
+                v-touch:tap="()=> {assistant()}"
         >
             <i class="fas fa-microphone"></i>
         </div>
@@ -147,17 +146,21 @@
                     this.engineStarting = false;
                 }
             },
-            async assistant(state){
+            async assistant(){
                 // Ask permission
 
-                if(state){
+                if(!this.isRecording){
                     this.isRecording = true;
+                    console.log('clicked');
                     try {
+
                         navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+                            console.log('permission granted');
                             recorder = new MediaRecorder(stream);
 
                             // Set record to <audio> when recording will be finished
                             recorder.addEventListener('dataavailable', async e => {
+                                console.log('Merging')
                                 const base64Audio = await BlobToBase64(e.data);
                                 const assistantResponse = await CarService.assistant(base64Audio);
                                 let state = assistantResponse.data.state;
@@ -177,11 +180,10 @@
                         });
                     }catch (e) {
                         this.isRecording = false;
-                    }finally {
-                        this.isRecording = false;
                     }
 
                 }else{
+                    this.isRecording = false;
                     console.log('recording click finish')
                     //Finish recording  & Send data
                     recorder.stop();
